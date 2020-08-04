@@ -3,10 +3,21 @@
 var number = 0; // base var for random numbers
 var cat = null; // base var for which part of trick to add each round
 var trickStance = ""; // base var for which stance each round
-var x = ""; // base var for compon
-var y = ""; // base var for compon
-var newTrick = [];
+var newFlipTrick = [];
+var newShuvTrick = [];
+var newTurnTrick = [];
 var addShuv = null;
+var addTurn = null;
+var addFlip = null;
+
+function resetVar(){
+	addShuv = null;
+	addTurn = null;
+	addFlip = null;
+	newFlipTrick = [];
+	newShuvTrick = [];
+	newTurnTrick = [];
+}
 
 // returns random number above 0 up to number provided as n for function
 // returns clost whole number less then number provided bt math.random
@@ -19,21 +30,28 @@ function randomN(n){
 //check for an easy trick
 
 $("#testBtnEasy").click(function(){
-	newTrick = [];
+	resetVar();
 	randomN(4);
 	trickStance = stance[number];
 	randomN(3);
 	cat = components[number];
 	trickCheck(cat,0);
-	console.log(newTrick);
-	document.getElementById("testDIV").innerHTML
-	= "<p>"+ newTrick[0].x + " " + newTrick[0].y +"</p>"
+	if (addTurn === true) {
+		document.getElementById("testDIV").innerHTML
+		= "<p>"+ trickStance + " " + newTurnTrick[0].x + " " + newTurnTrick[0].y + "</p>"
+	} else if (addShuv === true) {
+		document.getElementById("testDIV").innerHTML
+		= "<p>"+ trickStance + " " + newShuvTrick[0].x + " " + newShuvTrick[0].y + " Shuv</p>"
+	} else if (addFlip === true) {
+		document.getElementById("testDIV").innerHTML
+		= "<p>"+ trickStance + " " + newFlipTrick[0].x + " </p>"
+	};
 });
 
 //check for a medium trick
 
 $("#testBtnMed").click(function(){
-	newTrick = [];
+	resetVar();
 	randomN(4); 
 	trickStance = stance[number];
 	randomN(3);
@@ -43,11 +61,17 @@ $("#testBtnMed").click(function(){
 	randomN(2);
 	var cat = components[number];
 	trickCheck(cat,2);
-	console.log(newTrick)
 	components = [null,'flip','shuv','turn'];
-	document.getElementById("testDIV").innerHTML
-	+= "<p>"+ newTrick[0].x + " " + newTrick[0].y +"</p>"
-	+ "<p>"+ newTrick[1].x + " " + newTrick[1].y +"</p>"
+	if ((addTurn === true) && (addShuv === true)) {
+		document.getElementById("testDIV").innerHTML
+		= "<p>"+ trickStance + " " + newTurnTrick[0].x + " " + newTurnTrick[0].y + " " + newShuvTrick[0].x + " " + newShuvTrick[0].y + " Shuv</p>"
+	} else if ((addTurn === true) && (addFlip === true)) {
+		document.getElementById("testDIV").innerHTML
+		= "<p>"+ trickStance + " " + newTurnTrick[0].x + " " + newTurnTrick[0].y + " " + newFlipTrick[0].x + "</p>"
+	} else if ((addShuv === true) && (addFlip === true)) {
+		document.getElementById("testDIV").innerHTML
+		= "<p>"+ trickStance + " " + newFlipTrick[0].x + " " + newShuvTrick[0].x + " " + newShuvTrick[0].y + " Shuv</p>"
+	};
 });
 
 //check against flip array
@@ -88,13 +112,15 @@ function turnCheck(z,w){
 function trickCheck(cat,n){
 	if (cat === "flip"){
 		flipCheck(2,n);
-		newTrick.push(trick);
+		newFlipTrick.push(trick);
+		addFlip = true;
 	} else if (cat === "shuv"){
 		shuvCheck(2,n);
-		newTrick.push(trick);
+		newShuvTrick.push(trick);
 		addShuv = true;
 	} else if (cat === "turn") {
 		turnCheck(2,n);
-		newTrick.push(trick);
+		newTurnTrick.push(trick);
+		addTurn = true;
 	};
 };
