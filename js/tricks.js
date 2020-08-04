@@ -10,4 +10,4 @@ var turnRotation = [null,180,360];
 
 var trickComp = [null];
 
-var stance = [null, 'regular', 'switch', 'nollie', 'fakie']
+var stance = [null, 'regular', 'switch', 'nollie', 'fakie'];
