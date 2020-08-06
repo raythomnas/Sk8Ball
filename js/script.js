@@ -2,7 +2,7 @@
 
 var number = 0; // base var for random numbers
 var cat = null; // base var for which part of trick to add each round
-var trickStance = ""; // base var for which stance each round
+var trickStance = ""; // base var for which stance each round 
 var newFlipTrick = [];
 var newShuvTrick = [];
 var newTurnTrick = [];
@@ -35,7 +35,7 @@ $("#testBtnEasy").click(function(){
 	trickStance = stance[number];
 	randomN(3);
 	cat = components[number];
-	trickCheck(cat,0);
+	trickCheck(cat,0,0,0);
 	if (addTurn === true) {
 		document.getElementById("testDIV").innerHTML
 		= "<p>"+ trickStance + " " + newTurnTrick[0].x + " " + newTurnTrick[0].y + "</p>"
@@ -57,10 +57,36 @@ $("#testBtnMed").click(function(){
 	randomN(3);
 	var cat = components[number];
 	components.splice(number, 1);
-	trickCheck(cat,2);
+	trickCheck(cat,1,2,1);
 	randomN(2);
 	var cat = components[number];
-	trickCheck(cat,2);
+	trickCheck(cat,1,2,1);
+	components = [null,'flip','shuv','turn'];
+	if ((addTurn === true) && (addShuv === true)) {
+		document.getElementById("testDIV").innerHTML
+		= "<p>"+ trickStance + " " + newTurnTrick[0].x + " " + newTurnTrick[0].y + " " + newShuvTrick[0].x + " " + newShuvTrick[0].y + " Shuv</p>"
+	} else if ((addTurn === true) && (addFlip === true)) {
+		document.getElementById("testDIV").innerHTML
+		= "<p>"+ trickStance + " " + newTurnTrick[0].x + " " + newTurnTrick[0].y + " " + newFlipTrick[0].x + "</p>"
+	} else if ((addShuv === true) && (addFlip === true)) {
+		document.getElementById("testDIV").innerHTML
+		= "<p>"+ trickStance + " " + newFlipTrick[0].x + " " + newShuvTrick[0].x + " " + newShuvTrick[0].y + " Shuv</p>"
+	};
+});
+
+//check for a medium trick
+
+$("#testBtnHard").click(function(){
+	resetVar();
+	randomN(4); 
+	trickStance = stance[number];
+	randomN(3);
+	var cat = components[number];
+	components.splice(number, 1);
+	trickCheck(cat,1,3,2);
+	randomN(2);
+	var cat = components[number];
+	trickCheck(cat,1,3,2);
 	components = [null,'flip','shuv','turn'];
 	if ((addTurn === true) && (addShuv === true)) {
 		document.getElementById("testDIV").innerHTML
@@ -98,7 +124,7 @@ function shuvCheck(z,w){
 
 //check against turn array and turnrotation
 
-function turnCheck(z,w){
+function turnCheck(z,w,){
 	randomN(z);
 	x = turn[number];
 	randomN(w);
@@ -109,17 +135,17 @@ function turnCheck(z,w){
 
 //check trick and print in body
 
-function trickCheck(cat,n){
+function trickCheck(cat,n,m,o){
 	if (cat === "flip"){
 		flipCheck(2,n);
 		newFlipTrick.push(trick);
 		addFlip = true;
 	} else if (cat === "shuv"){
-		shuvCheck(2,n);
+		shuvCheck(2,m);
 		newShuvTrick.push(trick);
 		addShuv = true;
 	} else if (cat === "turn") {
-		turnCheck(2,n);
+		turnCheck(2,o);
 		newTurnTrick.push(trick);
 		addTurn = true;
 	};
