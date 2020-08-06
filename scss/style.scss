@@ -1,0 +1,43 @@
+* {
+	margin: 0;
+	padding: 0;
+};
+
+.header {
+	height: 15vh;
+	background-color: blue;
+	display: flex;
+	justify-content: space-between;
+	align-items: center;
+	h1, h2 {
+		padding: 1rem;
+	};
+};
+
+.main {
+	height: 70vh;
+	background-color: green;
+	display: flex;
+	justify-content: space-around;
+	align-items: center;
+	flex-direction: column;
+	.output {
+		width: 100%;
+		text-align: center;
+	};
+	.menu {
+		height: 100%;
+	};
+};
+
+.footer {
+	height: 15vh;
+	background-color: blue;
+	display: flex;
+	justify-content: space-around;
+	align-items: center;
+};
+
+.hidden {
+	display: none;
+};

@@ -150,3 +150,22 @@ function trickCheck(cat,n,m,o){
 		addTurn = true;
 	};
 };
+
+$("#menuBtn").click(function(){
+	$("#testDIV").toggleClass("hidden");
+	$("#menuSection").toggleClass("hidden");
+	console.log('click');
+});
+
+$("#menuDiff").click(function(){
+	$(this).next("ul").toggle();
+	console.log('click');
+});
+
+$("#diffSelect").click(function(){
+	$(this).closest("ul").toggle();
+});
+
+$("#menuDiff").siblings().click(function(){
+	$("#button").find("button").attr("id", ("testBtn" + event.target.innerHTML));
+})
