@@ -48,6 +48,25 @@ $("#testBtnEasy").click(function(){
 	};
 });
 
+function easyTrick() {
+	resetVar();
+	randomN(4);
+	trickStance = stance[number];
+	randomN(3);
+	cat = components[number];
+	trickCheck(cat,0,0,0);
+	if (addTurn === true) {
+		document.getElementById("testDIV").innerHTML
+		= "<p>"+ trickStance + " " + newTurnTrick[0].x + " " + newTurnTrick[0].y + "</p>"
+	} else if (addShuv === true) {
+		document.getElementById("testDIV").innerHTML
+		= "<p>"+ trickStance + " " + newShuvTrick[0].x + " " + newShuvTrick[0].y + " Shuv</p>"
+	} else if (addFlip === true) {
+		document.getElementById("testDIV").innerHTML
+		= "<p>"+ trickStance + " " + newFlipTrick[0].x + " </p>"
+	};	
+}
+
 //check for a medium trick
 
 $("#testBtnMed").click(function(){
@@ -74,6 +93,30 @@ $("#testBtnMed").click(function(){
 	};
 });
 
+function medTrick() {
+	resetVar();
+	randomN(4); 
+	trickStance = stance[number];
+	randomN(3);
+	var cat = components[number];
+	components.splice(number, 1);
+	trickCheck(cat,1,2,1);
+	randomN(2);
+	var cat = components[number];
+	trickCheck(cat,1,2,1);
+	components = [null,'flip','shuv','turn'];
+	if ((addTurn === true) && (addShuv === true)) {
+		document.getElementById("testDIV").innerHTML
+		= "<p>"+ trickStance + " " + newTurnTrick[0].x + " " + newTurnTrick[0].y + " " + newShuvTrick[0].x + " " + newShuvTrick[0].y + " Shuv</p>"
+	} else if ((addTurn === true) && (addFlip === true)) {
+		document.getElementById("testDIV").innerHTML
+		= "<p>"+ trickStance + " " + newTurnTrick[0].x + " " + newTurnTrick[0].y + " " + newFlipTrick[0].x + "</p>"
+	} else if ((addShuv === true) && (addFlip === true)) {
+		document.getElementById("testDIV").innerHTML
+		= "<p>"+ trickStance + " " + newFlipTrick[0].x + " " + newShuvTrick[0].x + " " + newShuvTrick[0].y + " Shuv</p>"
+	};
+}
+
 //check for a medium trick
 
 $("#testBtnHard").click(function(){
@@ -99,6 +142,30 @@ $("#testBtnHard").click(function(){
 		= "<p>"+ trickStance + " " + newFlipTrick[0].x + " " + newShuvTrick[0].x + " " + newShuvTrick[0].y + " Shuv</p>"
 	};
 });
+
+function hardTrick() {
+	resetVar();
+	randomN(4); 
+	trickStance = stance[number];
+	randomN(3);
+	var cat = components[number];
+	components.splice(number, 1);
+	trickCheck(cat,1,3,2);
+	randomN(2);
+	var cat = components[number];
+	trickCheck(cat,1,3,2);
+	components = [null,'flip','shuv','turn'];
+	if ((addTurn === true) && (addShuv === true)) {
+		document.getElementById("testDIV").innerHTML
+		= "<p>"+ trickStance + " " + newTurnTrick[0].x + " " + newTurnTrick[0].y + " " + newShuvTrick[0].x + " " + newShuvTrick[0].y + " Shuv</p>"
+	} else if ((addTurn === true) && (addFlip === true)) {
+		document.getElementById("testDIV").innerHTML
+		= "<p>"+ trickStance + " " + newTurnTrick[0].x + " " + newTurnTrick[0].y + " " + newFlipTrick[0].x + "</p>"
+	} else if ((addShuv === true) && (addFlip === true)) {
+		document.getElementById("testDIV").innerHTML
+		= "<p>"+ trickStance + " " + newFlipTrick[0].x + " " + newShuvTrick[0].x + " " + newShuvTrick[0].y + " Shuv</p>"
+	};
+}
 
 //check against flip array
 
@@ -154,7 +221,6 @@ function trickCheck(cat,n,m,o){
 $("#menuBtn").click(function(){
 	$("#testDIV").toggleClass("hidden");
 	$("#menuSection").toggleClass("hidden");
-	console.log('click');
 });
 
 $("#menuDiff").click(function(){
@@ -169,3 +235,17 @@ $("#diffSelect").click(function(){
 $("#menuDiff").siblings().click(function(){
 	$("#button").find("button").attr("id", ("testBtn" + event.target.innerHTML));
 })
+
+function newTrick(clicked_id){
+	if (testDIV.classList.contains("hidden") === true){
+		$("#testDIV").toggleClass("hidden");
+		$("#menuSection").toggleClass("hidden");
+	};
+	if (clicked_id === "testBtnEasy") {
+		easyTrick();
+	} else if (clicked_id === "testBtnMedium") {
+		medTrick();
+	} else if (clicked_id === "testBtnHard") {
+		hardTrick();
+	};
+}
